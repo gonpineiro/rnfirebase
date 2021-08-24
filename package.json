@@ -11,6 +11,7 @@
     "check-ts": "tsc --watch --noEmit --skipLibCheck"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^12.7.1",
     "husky": "^3.0.9",
     "react": "17.0.1",
     "react-native": "0.64.1"
