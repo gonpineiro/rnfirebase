@@ -14,7 +14,7 @@ const WelcomeScreen = () => {
         Welcome !!!!
       </Typography>
       <Separator width={50} />
-      <DefaultButton text="Iniciar " textSize={16} onPress={() => replaceRoute('TabNavigator')} />
+      <DefaultButton text="Iniciar " textSize={16} onPress={() => replaceRoute('InicioSesion')} />
       <DefaultButton
         text="Registrarse"
         textSize={16}

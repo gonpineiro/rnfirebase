@@ -2,23 +2,14 @@ import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import { View } from 'react-native';
 
-import { DefaultButton, Separator, Input, AlertModal } from '../../components';
+import { DefaultButton, Separator, Input } from '../../components';
 import styles from './styles';
 
 /* import { goToScreen } from '../../navigation/controls'; */
 
-const RegistroScreen = () => {
+const InicioSesion = () => {
   const [email, setEmail] = useState('');
   const [pass, setEPass] = useState('');
-  const [isModalRegisterVisible, setModalRegisterVisible] = useState(false);
-
-  const showModalRegister = () => {
-    setModalRegisterVisible(true);
-  };
-
-  const hideModal = () => {
-    setModalRegisterVisible(false);
-  };
 
   const handlerEmailChange = (value: string) => {
     setEmail(value);
@@ -30,19 +21,17 @@ const RegistroScreen = () => {
 
   const createCount = () => {
     auth()
-      .createUserWithEmailAndPassword(email, pass)
+      .signInWithEmailAndPassword(email, pass)
       .then(() => {
-        showModalRegister();
+        console.log('Correcto!');
       })
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
           console.log('That email address is already in use!');
-          showModalRegister();
         }
 
         if (error.code === 'auth/invalid-email') {
           console.log('That email address is invalid!');
-          showModalRegister();
         }
 
         console.error(error);
@@ -64,15 +53,9 @@ const RegistroScreen = () => {
         value={pass}
         onChance={handlerPassChange}
       />
-      <DefaultButton text="Registrarse" textSize={16} onPress={createCount} variant="primary" />
-      <AlertModal
-        message={'Se registro correctamente'}
-        primaryButtonText={'Ok!'}
-        onPressPrimaryButton={hideModal}
-        visible={isModalRegisterVisible}
-      />
+      <DefaultButton text="Ingresar" textSize={16} onPress={createCount} variant="primary" />
     </View>
   );
 };
 
-export default RegistroScreen;
+export default InicioSesion;
