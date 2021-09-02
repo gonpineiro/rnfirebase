@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 import { DefaultButton, Separator, Input } from '../../components';
 import styles from './styles';
+import { colors } from '../../utils/theme';
 
 /* import { goToScreen } from '../../navigation/controls'; */
 
 const InicioSesion = () => {
   const [email, setEmail] = useState('');
-  const [pass, setEPass] = useState('');
+  const [pass, setPass] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handlerEmailChange = (value: string) => {
     setEmail(value);
   };
 
   const handlerPassChange = (value: string) => {
-    setEPass(value);
+    setPass(value);
   };
 
   const createCount = () => {
@@ -35,8 +37,21 @@ const InicioSesion = () => {
         }
 
         console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
+
+  if (loading) {
+    return (
+      <>
+        <View style={styles.wholeScreenCenter}>
+          <ActivityIndicator size="large" color={colors.mainOrange} />
+        </View>
+      </>
+    );
+  }
 
   return (
     <View style={styles.mainContainer}>

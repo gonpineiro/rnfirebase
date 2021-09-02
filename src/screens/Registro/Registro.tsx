@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 import { DefaultButton, Separator, Input, AlertModal, Header } from '../../components';
 import styles from './styles';
+import { colors } from '../../utils/theme';
 
 /* import { goToScreen } from '../../navigation/controls'; */
 
 const RegistroScreen = () => {
   const [email, setEmail] = useState('');
   const [pass, setEPass] = useState('');
+  const [loading, setLoading] = useState(false);
   const [isModalRegisterVisible, setModalRegisterVisible] = useState(false);
 
   const showModalRegister = () => {
@@ -29,6 +31,7 @@ const RegistroScreen = () => {
   };
 
   const createCount = () => {
+    setLoading(true);
     auth()
       .createUserWithEmailAndPassword(email, pass)
       .then(() => {
@@ -46,8 +49,19 @@ const RegistroScreen = () => {
         }
 
         console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
+
+  if (loading) {
+    return (
+      <View style={styles.wholeScreenCenter}>
+        <ActivityIndicator size="large" color={colors.mainOrange} />
+      </View>
+    );
+  }
 
   return (
     <>
