@@ -29,6 +29,8 @@ const RegistroScreen = () => {
       });
     }
     if (code === 'confirm') {
+      setEmail('');
+      setPass('');
       setModalMessage({
         code,
         message: 'Registro exitoso',
@@ -39,7 +41,7 @@ const RegistroScreen = () => {
 
   const hideModal = () => {
     if (modalMessage.code === 'confirm') {
-      goToScreen('Welcome');
+      goToScreen('TabNavigator');
     }
     setModalRegisterVisible(false);
   };
