@@ -6,19 +6,41 @@ import { DefaultButton, Separator, Input, AlertModal, Header } from '../../compo
 import styles from './styles';
 import { colors } from '../../utils/theme';
 
-/* import { goToScreen } from '../../navigation/controls'; */
+import { goToScreen } from '../../navigation/controls';
 
 const RegistroScreen = () => {
   const [email, setEmail] = useState('');
-  const [pass, setEPass] = useState('');
+  const [pass, setPass] = useState('');
   const [loading, setLoading] = useState(false);
   const [isModalRegisterVisible, setModalRegisterVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState({ code: '', message: '' });
 
-  const showModalRegister = () => {
+  const showModalRegister = (code: string) => {
+    if (code === 'auth/email-already-in-use') {
+      setModalMessage({
+        code,
+        message: 'El correo ya se encuentra en uso',
+      });
+    }
+    if (code === 'auth/invalid-email') {
+      setModalMessage({
+        code,
+        message: 'El correo es invalido',
+      });
+    }
+    if (code === 'confirm') {
+      setModalMessage({
+        code,
+        message: 'Registro exitoso',
+      });
+    }
     setModalRegisterVisible(true);
   };
 
   const hideModal = () => {
+    if (modalMessage.code === 'confirm') {
+      goToScreen('Welcome');
+    }
     setModalRegisterVisible(false);
   };
 
@@ -27,7 +49,7 @@ const RegistroScreen = () => {
   };
 
   const handlerPassChange = (value: string) => {
-    setEPass(value);
+    setPass(value);
   };
 
   const createCount = () => {
@@ -35,24 +57,26 @@ const RegistroScreen = () => {
     auth()
       .createUserWithEmailAndPassword(email, pass)
       .then(() => {
-        showModalRegister();
+        showModalRegister('confirm');
       })
-      .catch((error) => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-          showModalRegister();
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-          showModalRegister();
-        }
-
-        console.error(error);
+      .catch(({ code }) => {
+        showModalRegister(code);
       })
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  const showRegisterButton = () => {
+    if (email === '' || pass === '') {
+      return (
+        <DefaultButton text="Faltan datos" textSize={16} onPress={() => {}} variant="secondary" />
+      );
+    } else {
+      return (
+        <DefaultButton text="Registrarse" textSize={16} onPress={createCount} variant="primary" />
+      );
+    }
   };
 
   if (loading) {
@@ -80,9 +104,9 @@ const RegistroScreen = () => {
           value={pass}
           onChance={handlerPassChange}
         />
-        <DefaultButton text="Registrarse" textSize={16} onPress={createCount} variant="primary" />
+        {showRegisterButton()}
         <AlertModal
-          message={'Se registro correctamente'}
+          message={modalMessage.message}
           primaryButtonText={'Ok!'}
           onPressPrimaryButton={hideModal}
           visible={isModalRegisterVisible}
