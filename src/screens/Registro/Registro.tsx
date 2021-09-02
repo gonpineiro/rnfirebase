@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import { View } from 'react-native';
 
-import { DefaultButton, Separator, Input, AlertModal } from '../../components';
+import { DefaultButton, Separator, Input, AlertModal, Header } from '../../components';
 import styles from './styles';
 
 /* import { goToScreen } from '../../navigation/controls'; */
@@ -50,28 +50,31 @@ const RegistroScreen = () => {
   };
 
   return (
-    <View style={styles.mainContainer}>
-      <Separator width={50} />
-      <Input
-        label="Correo Electronico"
-        placeholder="Ingrese su correo"
-        value={email}
-        onChance={handlerEmailChange}
-      />
-      <Input
-        label="Contraseña"
-        placeholder="Ingrese su contraseña"
-        value={pass}
-        onChance={handlerPassChange}
-      />
-      <DefaultButton text="Registrarse" textSize={16} onPress={createCount} variant="primary" />
-      <AlertModal
-        message={'Se registro correctamente'}
-        primaryButtonText={'Ok!'}
-        onPressPrimaryButton={hideModal}
-        visible={isModalRegisterVisible}
-      />
-    </View>
+    <>
+      <Header showBackButton={true} title="Registro" />
+      <View style={styles.mainContainer}>
+        <Separator size={50} />
+        <Input
+          label="Correo Electronico"
+          placeholder="Ingrese su correo"
+          value={email}
+          onChance={handlerEmailChange}
+        />
+        <Input
+          label="Contraseña"
+          placeholder="Ingrese su contraseña"
+          value={pass}
+          onChance={handlerPassChange}
+        />
+        <DefaultButton text="Registrarse" textSize={16} onPress={createCount} variant="primary" />
+        <AlertModal
+          message={'Se registro correctamente'}
+          primaryButtonText={'Ok!'}
+          onPressPrimaryButton={hideModal}
+          visible={isModalRegisterVisible}
+        />
+      </View>
+    </>
   );
 };
 

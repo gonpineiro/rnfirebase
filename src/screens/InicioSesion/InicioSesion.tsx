@@ -40,7 +40,7 @@ const InicioSesion = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <Separator width={50} />
+      <Separator size={50} />
       <Input
         label="Correo Electronico"
         placeholder="Ingrese su correo"

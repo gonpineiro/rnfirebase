@@ -6,7 +6,7 @@ import { InicioSesionScreen, WelcomeScreen, RegistroScreen } from '../screens';
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => (
-  <Stack.Navigator initialRouteName="Welcome">
+  <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Welcome" component={WelcomeScreen} />
     <Stack.Screen name="Registro" component={RegistroScreen} />
     <Stack.Screen name="InicioSesion" component={InicioSesionScreen} />
