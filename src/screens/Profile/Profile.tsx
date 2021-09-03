@@ -5,14 +5,14 @@ import { Typography } from '../../components';
 import styles from './styles';
 
 // @ts-ignore
-const MainScreen = () => {
+const ProfileScreen = () => {
   return (
     <View style={styles.mainContainer}>
       <Typography size={20} variant="medium">
-        Main
+        Perfil
       </Typography>
     </View>
   );
 };
 
-export default MainScreen;
+export default ProfileScreen;

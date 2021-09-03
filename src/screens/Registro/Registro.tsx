@@ -61,8 +61,10 @@ const RegistroScreen = () => {
       .then(() => {
         showModalRegister('confirm');
       })
-      .catch(({ code }) => {
-        showModalRegister(code);
+      .catch((error) => {
+        console.log(error);
+
+        showModalRegister(error.code);
       })
       .finally(() => {
         setLoading(false);

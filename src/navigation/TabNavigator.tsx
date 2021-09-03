@@ -3,7 +3,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { RouteProp } from '@react-navigation/core';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { MainScreen } from '../screens';
+import { MainScreen, FavoriteScreen, ProfileScreen } from '../screens';
 
 import { colors } from '../utils/theme';
 
@@ -14,11 +14,14 @@ const Tab = createBottomTabNavigator();
 const getIconName = (routeName: string) => {
   let iconName = '';
   switch (routeName) {
-    case 'HomeTab':
+    case 'Main':
       iconName = 'home';
       break;
-    case 'HistoryTab':
-      iconName = 'history';
+    case 'Favorite':
+      iconName = 'favorite';
+      break;
+    case 'Profile':
+      iconName = 'account-circle';
       break;
     default:
       iconName = 'help-outline';
@@ -46,7 +49,9 @@ const navigatorScreenOptions = ({ route }: { route: Route }) => ({
 
 const TabNavigator = () => (
   <Tab.Navigator screenOptions={navigatorScreenOptions}>
-    <Tab.Screen name="HomeTab" component={MainScreen} options={{ title: 'Home' }} />
+    <Tab.Screen name="Main" component={MainScreen} options={{ title: 'Main' }} />
+    <Tab.Screen name="Favorite" component={FavoriteScreen} options={{ title: 'Favoritos' }} />
+    <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Perfil' }} />
   </Tab.Navigator>
 );
 
